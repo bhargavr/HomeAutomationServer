@@ -3,18 +3,19 @@ package com.sjsu.cmpe273Server.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "SecuritySystem")
-public class SecuritySystem {
+@Document(collection = "HVACSystem")
+public class HVACSystem {
+	
 	private String manufacturer;
 	private String modelNumber;
 	@Id
 	private String serialNumber;
 	private String firmwareVersion;
 	
-	public SecuritySystem(){
+	public HVACSystem(){
 	}
 	
-	public SecuritySystem(String Manufacturer, String ModelNumber, String SerialNumber, String FirmwareVersion){
+	public HVACSystem(String Manufacturer, String ModelNumber, String SerialNumber, String FirmwareVersion){
 		manufacturer = Manufacturer;
 		modelNumber = ModelNumber;
 		serialNumber = SerialNumber;
@@ -62,21 +63,5 @@ public class SecuritySystem {
 		stringBuilder.append("Firmware Version: "+this.firmwareVersion+"\n");
 		return stringBuilder.toString();
 		
-	}
-	
-	@Override
-	public boolean equals(Object other)
-	{
-		if (!(other instanceof SecuritySystem)) {
-	        return false;
-	    }
-		
-		SecuritySystem that = (SecuritySystem) other;
-
-	    // Custom equality check here.
-	    return this.manufacturer.equals(that.manufacturer)
-	        && this.modelNumber.equals(that.modelNumber)
-	        && this.serialNumber.equals(that.serialNumber)
-	        && this.firmwareVersion.equals(that.firmwareVersion);
 	}
 }

@@ -1,108 +1,174 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="resources/js/amcharts.js"></script>
-<script src="resources/js/serial.js"></script>
 
-<title>Sample</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="HomeAutomation" />
+    <meta name="author" content="HomeAutomation" />
 
-<!-- Bootstrap Core CSS -->
-<link href="resources/css/bootstrap2.css" rel="stylesheet" />
+    <title>HomeAutomation</title>
 
-<!-- Custom styles for this template -->
-<link href="resources/css/home.css" rel="stylesheet" />
+    <!-- Bootstrap Core CSS -->
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+    
 
-<script type="text/javascript"
-	src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
+    <!-- Custom CSS -->
+    <link href="resources/css/stylish-portfolio.css" rel="stylesheet" />
 
-<script type="text/javascript">
-	google.setOnLoadCallback(drawChart);
-	
-	var myInterval;
+    <!-- Custom Fonts -->
+    <link href="resources/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 
-	function drawChart() {
-		
-		var data = new google.visualization.DataTable();
-	      data.addColumn('string', 'Snapshot');
-	      data.addColumn('number', 'Temperature');
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-		var url = '/rest/getChartData?name=thermoStat2';
-		
-		$.getJSON(url, function(json) {
-			if(json != null){
-				data.addRows(json.data);
-			}else{
-				data.addRows([
-								[ 'Snapshot#1', 10 ], [ 'Snapshot#2', 20 ],
-								[ 'Snapshot#3', 30 ], [ 'Snapshot#4', 25 ] ]);
-			}
-			
-			var options = {
-					title : 'CMPE Termostat Temprature',
-					curveType : 'function',
-					backgroundColor : json.color,
-					legend : {
-						position : 'bottom'
-					}
-				};
-
-				var chart = new google.visualization.LineChart(document
-						.getElementById('curve_chart'));
-
-				var element = document.getElementById("message");
-				element.innerHTML = json.message;
-				
-				chart.draw(data, options);
-			
-		});
-	}
-
-	function setIntervalData() {
-		myInterval = setInterval(drawChart, 3000);
-	}
-
-	function clearIntervalData() {
-		clearInterval(myInterval);
-	}
-</script>
 </head>
+
 <body>
-	<h1 id="header">CMPE 273 [Server Dash board]</h1>
-	<div>
-		<button onclick="setIntervalData()">Start Observing</button>
-	</div>
-	<br></br>
-	<div>
-		<button onclick="clearIntervalData()">Cancel Observing</button>
-	</div>
-	<br></br>
-	<h3 id="message">Message : Temperature Looks Normal !!</h3>
-	<div id="curve_chart" style="width: 800px; height: 500px"></div>
 
-	<footer>
-		<p>&copy; Sample Project 2014</p>
-	</footer>
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top">HomeAutomation</a>
+            </li>
+            <li>
+                <a href="#top">Home</a>
+            </li>
+            <li>
+                <a th:href="@{/home}">SignIn/SignUp</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+        </ul>
+    </nav>
 
+    <!-- Header -->
+    <header id="top" class="header">
+        <div class="text-vertical-center">
+            <h1>HomeAutomation</h1>
+            <h3>We help you, towards securing your home !!</h3>
+            <br/>
+            <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
+        </div>
+    </header>
 
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Monitoring Homes, for safe guarding families !!</h2>
+                    <p class="lead">Register and get benefited</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<!-- jQuery Version 1.11.0 -->
-	<script src="resources/js/jquery-1.11.0.js"></script>
+    
+    <section id="signinSignup">
+    <!-- Callout -->
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <h1>Find out more by Sign in or Sign Up</h1>
+        </div>
+    </aside>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="resources/js/bootstrap.min.js"></script>
+    <!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Secure your Home!!</h3>
+                    <a th:href="@{/home}" class="btn btn-lg btn-light">Sign In!</a>
+                    <a th:href="@{/register}" class="btn btn-lg btn-dark">Sign Up!</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+ 	</section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>HomeAutomation</strong>
+                    </h4>
+                    <p>1 Washington Sq<br />San Jose, CA 95192</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:bhargavreddy@gmail.com">bhargavreddy@gmail.com</a>
+                        </li>
+                    </ul>
+                    <br />
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+                        </li>
+                    </ul>
+                    <hr class="small" />
+                    <p class="text-muted">Copyright &copy; Your Website 2015</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="resources/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="resources/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    </script>
+
 </body>
+
 </html>

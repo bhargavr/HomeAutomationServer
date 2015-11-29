@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .withUser("test@liferay.com").password("password").roles("USER");
     	
 //		auth.jdbcAuthentication()
 //		.dataSource(dataSource)

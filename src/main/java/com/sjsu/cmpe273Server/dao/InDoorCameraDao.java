@@ -1,6 +1,6 @@
 package com.sjsu.cmpe273Server.dao;
 
-import com.sjsu.cmpe273Server.dto.InDoorCamera;
+import com.sjsu.cmpe273Server.model.InDoorCamera;
 import java.util.List;
 import java.util.Optional;
 

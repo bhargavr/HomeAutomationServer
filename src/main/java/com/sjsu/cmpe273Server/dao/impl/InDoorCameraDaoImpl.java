@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mongodb.DBCollection;
 import com.mongodb.DuplicateKeyException;
 import com.sjsu.cmpe273Server.dao.InDoorCameraDao;
 import com.sjsu.cmpe273Server.model.InDoorCamera;
@@ -88,5 +89,15 @@ public class InDoorCameraDaoImpl implements InDoorCameraDao  {
 		    return Optional.empty();
 		}
 
+	}
+
+	@Override
+	public List<InDoorCamera> getDistinctList() {
+		List<InDoorCamera> inDoorCamera = new ArrayList<>();
+		try{
+			DBCollection dbCol = mongoOperation.getCollection("SecuritySystem");
+			inDoorCamera = dbCol.distinct("cameraID");
+		}catch(Exception e){}
+	    return inDoorCamera;
 	}
 }

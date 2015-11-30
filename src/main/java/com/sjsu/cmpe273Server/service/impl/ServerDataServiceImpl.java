@@ -5,7 +5,16 @@ package com.sjsu.cmpe273Server.service.impl;
 
 import com.sjsu.cmpe273Server.dao.SequenceDao;
 import com.sjsu.cmpe273Server.dao.ServerDataDAO;
+import com.sjsu.cmpe273Server.dao.impl.InDoorCameraDaoImpl;
+import com.sjsu.cmpe273Server.dao.impl.OutDoorCameraDaoImpl;
+import com.sjsu.cmpe273Server.dao.impl.SecurityAlarmDaoImpl;
+import com.sjsu.cmpe273Server.dao.impl.ThermostatDaoImpl;
+import com.sjsu.cmpe273Server.model.HVACSystem;
+import com.sjsu.cmpe273Server.model.InDoorCamera;
+import com.sjsu.cmpe273Server.model.OutDoorCamera;
+import com.sjsu.cmpe273Server.model.SecuritySystem;
 import com.sjsu.cmpe273Server.model.ServerData;
+import com.sjsu.cmpe273Server.model.Thermostat;
 import com.sjsu.cmpe273Server.service.ServerDataService;
 
 import java.util.ArrayList;
@@ -32,6 +41,18 @@ public class ServerDataServiceImpl implements ServerDataService {
 
 	@Autowired
 	private ServerDataDAO serverDataDAO;
+	
+	@Autowired
+	private InDoorCameraDaoImpl inDoorCameraDao;
+	
+	@Autowired
+	private OutDoorCameraDaoImpl outDoorCameraDao;
+	
+	@Autowired
+	private ThermostatDaoImpl thermostatDao;
+	
+	@Autowired
+	private SecurityAlarmDaoImpl securityAlarmDao;
 
 	/*
 	 * (non-Javadoc)
@@ -110,4 +131,52 @@ public class ServerDataServiceImpl implements ServerDataService {
 		return serverDataDAO.getServerObject(name);
 	}
 
+	@Override
+	public Map<String, Object> getDeviceData(String userName) throws Exception {
+		Map<String,Object> resultObj = new HashMap<String,Object>();
+		List<InDoorCamera> listInCamera = new ArrayList<InDoorCamera>();
+		List<Thermostat> thermoList = new ArrayList<Thermostat>();
+		
+		List<InDoorCamera> listofAllIndoorCam = inDoorCameraDao.getAll();
+		List<Thermostat> listofAllThermostat = thermostatDao.getAll();
+		
+		for(InDoorCamera inDoorCamObj : listofAllIndoorCam){
+			if(indoorCamCheck(listInCamera, inDoorCamObj)){
+				listInCamera.add(inDoorCamObj);
+			}
+		}
+		
+		for(Thermostat thermoObj : listofAllThermostat){
+			if(thermoCheck(thermoList, thermoObj)){
+				thermoList.add(thermoObj);
+			}
+		}
+		
+		resultObj.put("security",listInCamera);
+		resultObj.put("hvac",thermoList);
+		return resultObj;
+	}
+
+	private boolean indoorCamCheck(List<InDoorCamera> listInCamera, InDoorCamera inDoorCamObj) {
+		for(InDoorCamera inCam : listInCamera){
+			if(inCam.getCameraID() ==inDoorCamObj.getCameraID())
+				return false;
+			else
+				return true;
+		}
+		
+		return true;
+	}
+
+	private boolean thermoCheck(List<Thermostat> listThermo, Thermostat thermoObj) {
+		for(Thermostat thermo : listThermo){
+			if(thermo.getThermostatID() == thermoObj.getThermostatID())
+				return false;
+			else
+				return true;
+		}
+		
+		return true;
+	}
+	
 }

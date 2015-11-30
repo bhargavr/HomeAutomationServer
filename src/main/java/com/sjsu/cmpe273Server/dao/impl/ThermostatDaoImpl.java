@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mongodb.DBCollection;
 import com.mongodb.DuplicateKeyException;
 import com.sjsu.cmpe273Server.dao.ThermostatDao;
 import com.sjsu.cmpe273Server.model.Thermostat;
@@ -86,5 +87,15 @@ public class ThermostatDaoImpl implements ThermostatDao{
 		    return Optional.empty();
 		}
 
+	}
+
+	@Override
+	public List<Thermostat> getDistinctList() {
+		List<Thermostat> thermostat = new ArrayList<>();
+		try{
+			DBCollection dbCol = mongoOperation.getCollection("HVACSystem");
+			thermostat = dbCol.distinct("thermostatID");
+		}catch(Exception e){}
+	    return thermostat;
 	}
 }

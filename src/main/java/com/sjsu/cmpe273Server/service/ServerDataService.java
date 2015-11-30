@@ -26,4 +26,6 @@ public interface ServerDataService {
 	
 	ServerData findServerObj(String name) throws Exception;
 	
+	Map<String,Object> getDeviceData(String userName) throws Exception;
+	
 }

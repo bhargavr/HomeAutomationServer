@@ -126,4 +126,15 @@ public class ServerDataController {
 		}
     	return result;
     }
+    
+    @RequestMapping("/getDeviceData")
+    public Map<String,Object> getDeviceData(@RequestParam(value="name", defaultValue="thermoStat2") String name) {
+    	Map<String,Object> result = null;
+    	try {
+    		result =  serverDataService.getDeviceData(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return result;
+    }
 }

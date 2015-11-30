@@ -37,6 +37,35 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable
+            ([['X', '1', '2', '3', '4', '5', '6'],
+              [1, 2, 3, 4, 5, 6, 7],
+              [2, 3, 4, 5, 6, 7, 8],
+              [3, 4, 5, 6, 7, 8, 9],
+              [4, 5, 6, 7, 8, 9, 10],
+              [5, 6, 7, 8, 9, 10, 11],
+              [6, 7, 8, 9, 10, 11, 12]
+        ]);
+
+        var options = {
+          legend: 'none',
+          hAxis: { maxValue: 7 },
+          vAxis: { maxValue: 13 },
+          lineWidth: 10,
+          colors: ['#e2431e', '#d3362d', '#e7711b',
+                   '#e49307', '#e49307', '#b9c246']
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
 </head>
 
 <body>
@@ -107,7 +136,7 @@
                             </div> 
                         </li>
                         <li>
-                            <a class="active" th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a th:href="@{/device}"><i class="fa fa-edit fa-fw"></i> Device List</a>
@@ -116,7 +145,7 @@
                             <a th:href="@{/alert}"><i class="fa fa-edit fa-fw"></i> Alert</a>
                         </li>
                         <li>
-                            <a th:href="@{/report}"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                            <a class="active" th:href="@{/report}"><i class="fa fa-edit fa-fw"></i> Reports</a>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +163,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-
+				<div id="chart_div" style="width: 900px; height: 500px;"></div>
         	</div>
         <!-- /#page-wrapper -->
 		</div>

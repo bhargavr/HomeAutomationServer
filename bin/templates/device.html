@@ -37,9 +37,45 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    function getAllDevices(){
+    	$.getJSON('/rest/getDeviceData',
+    		    function (json) {
+    		
+    		        var tr;
+    		        $("#security > tbody").html("");
+    		        for (var i = 0; i < json.security.length; i++) {
+    		            tr = $('<tr/>');
+    		            tr.append("<td>" + json.security[i].cameraID + "</td>");
+    		            tr.append("<td>" + json.security[i].manufacturer + "</td>");
+    		            tr.append("<td>" + json.security[i].modelNumber + "</td>");
+    		            tr.append("<td>" + json.security[i].serialNumber + "</td>");
+    		            tr.append("<td>" + json.security[i].firmwareVersion + "</td>");
+    		            $("#security").append(tr);
+    		        }
+    		        
+    		        $("#hvac > tbody").html("");
+    		        for (var j = 0; j < json.hvac.length; j++) {
+    		            tr = $('<tr/>');
+    		            tr.append("<td>" + json.hvac[j].thermostatID + "</td>");
+    		            tr.append("<td>" + json.hvac[j].manufacturer + "</td>");
+    		            tr.append("<td>" + json.hvac[j].modelNumber + "</td>");
+    		            tr.append("<td>" + json.hvac[j].serialNumber + "</td>");
+    		            tr.append("<td>" + json.hvac[j].firmwareVersion + "</td>");
+    		            $("#hvac").append(tr);
+    		        }
+    		        
+    		    });
+    }
+    /*]]>*/	
+  </script>
+
+
 </head>
 
-<body>
+<body onload="getAllDevices()">
 
     <div id="wrapper">
 
@@ -107,10 +143,10 @@
                             </div> 
                         </li>
                         <li>
-                            <a class="active" th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a th:href="@{/device}"><i class="fa fa-edit fa-fw"></i> Device List</a>
+                            <a class="active" th:href="@{/device}"><i class="fa fa-edit fa-fw"></i> Device List</a>
                         </li>
                          <li>
                             <a th:href="@{/alert}"><i class="fa fa-edit fa-fw"></i> Alert</a>
@@ -134,7 +170,43 @@
             </div>
             <!-- /.row -->
             <div class="row">
-
+				
+				<div class="panel panel-default">
+				<div class="panel-heading">Security</div>
+		            <table id="security" class="table table-hover">
+		              <thead>
+		                <tr>
+		                  <th>cameraID</th>
+		                  <th>Manufacturer</th>
+		                  <th>ModelNumber</th>
+		                  <th>SerialNumber</th>
+		                  <th>firmwareVersion</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              
+		              </tbody>
+		            </table>
+				</div>
+				
+				<div class="panel panel-default">
+				<div class="panel-heading">HVAC</div>
+		            <table id="hvac" class="table table-hover">
+		              <thead>
+		                <tr>
+		                 <th>thermostatID</th>
+		                  <th>Manufacturer</th>
+		                  <th>ModelNumber</th>
+		                  <th>SerialNumber</th>
+		                  <th>firmwareVersion</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              
+		              </tbody>
+		            </table>
+				</div>
+				
         	</div>
         <!-- /#page-wrapper -->
 		</div>

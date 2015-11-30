@@ -37,9 +37,31 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    function getAllAlerts(){
+    	$.getJSON('/alertMessage/getall',
+    		    function (json) {
+    		
+    		        var tr;
+    		        $("#alert > tbody").html("");
+    		        for (var i = 0; i < json.length; i++) {
+    		            tr = $('<tr/>');
+    		            tr.append("<td>" + json[i].deviceType + "</td>");
+    		            tr.append("<td>" + json[i].alarmStatus + "</td>");
+    		            tr.append("<td>" + json[i].message + "</td>");
+    		            tr.append("<td>" + json[i].messageDate + "</td>");
+    		            $("#alert").append(tr);
+    		        }
+    		        
+    		    });
+    }
+    /*]]>*/	
+  </script>
+
 </head>
 
-<body>
+<body onload="getAllAlerts()">
 
     <div id="wrapper">
 
@@ -107,13 +129,13 @@
                             </div> 
                         </li>
                         <li>
-                            <a class="active" th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a th:href="@{/home}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a th:href="@{/device}"><i class="fa fa-edit fa-fw"></i> Device List</a>
                         </li>
                          <li>
-                            <a th:href="@{/alert}"><i class="fa fa-edit fa-fw"></i> Alert</a>
+                            <a class="active" th:href="@{/alert}"><i class="fa fa-edit fa-fw"></i> Alert</a>
                         </li>
                         <li>
                             <a th:href="@{/report}"><i class="fa fa-edit fa-fw"></i> Reports</a>
@@ -134,6 +156,24 @@
             </div>
             <!-- /.row -->
             <div class="row">
+
+				<div class="panel panel-default">
+				<div class="panel-heading">Alert Messages</div>
+		            <table id="alert" class="table table-hover">
+		              <thead>
+		                <tr>
+		                  <th>Device Type</th>
+		                  <th>Alarm Status</th>
+		                  <th>Message</th>
+		                  <th>Message Date</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              
+		              </tbody>
+		            </table>
+				</div>
+
 
         	</div>
         <!-- /#page-wrapper -->

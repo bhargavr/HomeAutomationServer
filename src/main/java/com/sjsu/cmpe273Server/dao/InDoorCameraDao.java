@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface InDoorCameraDao{
 	public List<InDoorCamera> getAll();
+	public List<InDoorCamera> getDistinctList();
 	public Optional<InDoorCamera> read(String serialNumber);
 	public Optional<InDoorCamera> create(InDoorCamera inDoorCamera);
 	public Optional<InDoorCamera> update(InDoorCamera inDoorCamera);

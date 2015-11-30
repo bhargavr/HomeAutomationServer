@@ -8,7 +8,6 @@ public class HVACSystem {
 	
 	private String manufacturer;
 	private String modelNumber;
-	@Id
 	private String serialNumber;
 	private String firmwareVersion;
 	

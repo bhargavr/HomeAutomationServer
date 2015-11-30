@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SecuritySystem {
 	private String manufacturer;
 	private String modelNumber;
-	@Id
 	private String serialNumber;
 	private String firmwareVersion;
 	

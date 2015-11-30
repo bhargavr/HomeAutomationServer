@@ -32,7 +32,7 @@ public class OutDoorCamera extends SecuritySystem{
 		this.cameraID = cameraID;
 	}
 	
-	public boolean getInfraredLED(){
+	public boolean getEnableInfrared(){
 		return enableInfrared;
 	}
 	

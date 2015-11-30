@@ -38,7 +38,7 @@ public class InDoorCamera extends SecuritySystem {
 		this.motionDetection = motionDetection;
 	}
 	
-	public boolean enableRecording(){
+	public boolean getEnableRecording(){
 		return enableRecording;
 	}
 	

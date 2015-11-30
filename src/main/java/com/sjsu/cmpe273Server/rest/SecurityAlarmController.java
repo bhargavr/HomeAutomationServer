@@ -12,73 +12,72 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import com.sjsu.cmpe273Server.dao.impl.SecurityAlarmDaoImpl;
+import com.sjsu.cmpe273Server.model.SecurityAlarm;
+
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
-import com.sjsu.cmpe273Server.dao.impl.InDoorCameraDaoImpl;
-import com.sjsu.cmpe273Server.model.InDoorCamera;
-
 @RestController
-@RequestMapping("/securitysystem/indoorcamera")
-public class InDoorCameraController {
-	
+@RequestMapping("/securitysystem/alarm")
+public class SecurityAlarmController {
 	@Autowired
-	private InDoorCameraDaoImpl inDoorCameraDao;
+	private SecurityAlarmDaoImpl securityAlarmDao;
 	
 	@RequestMapping("/getall")
-	public List<InDoorCamera> getAllInDoorCamera()
+	public List<SecurityAlarm> getAllSecurityAlarm()
 	{
-		List<InDoorCamera> result = null;
+		List<SecurityAlarm> result = null;
 		try{
-			result = inDoorCameraDao.getAll();
+			result = securityAlarmDao.getAll();
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/create", method=RequestMethod.POST,
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> create(@RequestBody InDoorCamera inDoorCamera){
-		if(inDoorCameraDao.create(inDoorCamera).isPresent()){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.CREATED);
+	public ResponseEntity<SecurityAlarm> create(@RequestBody SecurityAlarm inDoorCamera){
+		if(securityAlarmDao.create(inDoorCamera).isPresent()){
+			return new ResponseEntity<SecurityAlarm>(HttpStatus.CREATED);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + inDoorCamera.getSerialNumber() + "] already exists.");
+		throw new EntityExistsException("Security Alarm with serial number[" + inDoorCamera.getSerialNumber() + "] already exists.");
 	}
 	
 	@RequestMapping(value = "/delete/{serialNumber}", method=RequestMethod.DELETE)
-	public ResponseEntity<InDoorCamera> delete(@PathVariable String serialNumber)
+	public ResponseEntity<SecurityAlarm> delete(@PathVariable String serialNumber)
 	{
-		if(inDoorCameraDao.delete(serialNumber)){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.NO_CONTENT);
+		if(securityAlarmDao.delete(serialNumber)){
+			return new ResponseEntity<SecurityAlarm>(HttpStatus.NO_CONTENT);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + serialNumber + "] does not exists.");
+		throw new EntityExistsException("Security Alarm with serial number[" + serialNumber + "] does not exists.");
 	}
 	
 	@RequestMapping(value = "/read/{serialNumber}", method=RequestMethod.GET,
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> read(@PathVariable String serialNumber)
+	public ResponseEntity<SecurityAlarm> read(@PathVariable String serialNumber)
 	{
-		Optional<InDoorCamera> optional = inDoorCameraDao.read(serialNumber);
+		Optional<SecurityAlarm> optional = securityAlarmDao.read(serialNumber);
 		if(optional.isPresent()){
-			return new ResponseEntity<InDoorCamera>(optional.get(), HttpStatus.OK);
+			return new ResponseEntity<SecurityAlarm>(optional.get(), HttpStatus.OK);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + serialNumber + "] not found.");
+		throw new EntityExistsException("Security Alarm with serial number[" + serialNumber + "] not found.");
 	}
 	
 	@RequestMapping(value = "/update/{serialNumber}", method=RequestMethod.PUT,
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> update(@RequestBody InDoorCamera inDoorCamera)
+	public ResponseEntity<SecurityAlarm> update(@RequestBody SecurityAlarm inDoorCamera)
 	{
-		Optional<InDoorCamera> optional = inDoorCameraDao.update(inDoorCamera);
+		Optional<SecurityAlarm> optional = securityAlarmDao.update(inDoorCamera);
 		if(optional.isPresent()){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<SecurityAlarm>(HttpStatus.ACCEPTED);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + inDoorCamera.getSerialNumber() + "] does not exists.");
+		throw new EntityExistsException("Security Alarm with serial number[" + inDoorCamera.getSerialNumber() + "] does not exists.");
 	}
 	
 	@ExceptionHandler({EntityNotFoundException.class})

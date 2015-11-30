@@ -18,22 +18,21 @@ import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
-import com.sjsu.cmpe273Server.dao.impl.InDoorCameraDaoImpl;
-import com.sjsu.cmpe273Server.model.InDoorCamera;
+import com.sjsu.cmpe273Server.dao.impl.ThermostatDaoImpl;
+import com.sjsu.cmpe273Server.model.Thermostat;
 
 @RestController
-@RequestMapping("/securitysystem/indoorcamera")
-public class InDoorCameraController {
-	
+@RequestMapping("/hvacsystem/thermostat")
+public class ThermostatController {
 	@Autowired
-	private InDoorCameraDaoImpl inDoorCameraDao;
+	private ThermostatDaoImpl thermostatDao;
 	
 	@RequestMapping("/getall")
-	public List<InDoorCamera> getAllInDoorCamera()
+	public List<Thermostat> getAllThermostat()
 	{
-		List<InDoorCamera> result = null;
+		List<Thermostat> result = null;
 		try{
-			result = inDoorCameraDao.getAll();
+			result = thermostatDao.getAll();
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -43,42 +42,42 @@ public class InDoorCameraController {
 	
 	@RequestMapping(value = "/create", method=RequestMethod.POST,
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> create(@RequestBody InDoorCamera inDoorCamera){
-		if(inDoorCameraDao.create(inDoorCamera).isPresent()){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.CREATED);
+	public ResponseEntity<Thermostat> create(@RequestBody Thermostat inDoorCamera){
+		if(thermostatDao.create(inDoorCamera).isPresent()){
+			return new ResponseEntity<Thermostat>(HttpStatus.CREATED);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + inDoorCamera.getSerialNumber() + "] already exists.");
+		throw new EntityExistsException("Thermostat with serial number[" + inDoorCamera.getSerialNumber() + "] already exists.");
 	}
 	
 	@RequestMapping(value = "/delete/{serialNumber}", method=RequestMethod.DELETE)
-	public ResponseEntity<InDoorCamera> delete(@PathVariable String serialNumber)
+	public ResponseEntity<Thermostat> delete(@PathVariable String serialNumber)
 	{
-		if(inDoorCameraDao.delete(serialNumber)){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.NO_CONTENT);
+		if(thermostatDao.delete(serialNumber)){
+			return new ResponseEntity<Thermostat>(HttpStatus.NO_CONTENT);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + serialNumber + "] does not exists.");
+		throw new EntityExistsException("Thermostat with serial number[" + serialNumber + "] does not exists.");
 	}
 	
 	@RequestMapping(value = "/read/{serialNumber}", method=RequestMethod.GET,
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> read(@PathVariable String serialNumber)
+	public ResponseEntity<Thermostat> read(@PathVariable String serialNumber)
 	{
-		Optional<InDoorCamera> optional = inDoorCameraDao.read(serialNumber);
+		Optional<Thermostat> optional = thermostatDao.read(serialNumber);
 		if(optional.isPresent()){
-			return new ResponseEntity<InDoorCamera>(optional.get(), HttpStatus.OK);
+			return new ResponseEntity<Thermostat>(optional.get(), HttpStatus.OK);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + serialNumber + "] not found.");
+		throw new EntityExistsException("Thermostat with serial number[" + serialNumber + "] not found.");
 	}
 	
 	@RequestMapping(value = "/update/{serialNumber}", method=RequestMethod.PUT,
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<InDoorCamera> update(@RequestBody InDoorCamera inDoorCamera)
+	public ResponseEntity<Thermostat> update(@RequestBody Thermostat inDoorCamera)
 	{
-		Optional<InDoorCamera> optional = inDoorCameraDao.update(inDoorCamera);
+		Optional<Thermostat> optional = thermostatDao.update(inDoorCamera);
 		if(optional.isPresent()){
-			return new ResponseEntity<InDoorCamera>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<Thermostat>(HttpStatus.ACCEPTED);
 		}
-		throw new EntityExistsException("InDoorCamera with serial number[" + inDoorCamera.getSerialNumber() + "] does not exists.");
+		throw new EntityExistsException("Thermostat with serial number[" + inDoorCamera.getSerialNumber() + "] does not exists.");
 	}
 	
 	@ExceptionHandler({EntityNotFoundException.class})
